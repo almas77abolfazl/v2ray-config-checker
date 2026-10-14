@@ -131,6 +131,19 @@ svg { width: 16px; height: 16px; flex: none; }
 .conn-meta { color: var(--text-2); font-family: var(--mono); font-size: 11.3px; direction: ltr; }
 .conn-spacer { flex: 1; }
 
+/* ---------- xray banner ---------- */
+.xray-banner {
+  flex: none;
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 16px;
+  background: var(--warn-soft);
+  border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+  font-size: 12.4px;
+  color: #fde68a;
+}
+.xray-banner-text { flex: 1; }
+.xray-banner-text strong { color: var(--warn); }
+
 /* ---------- layout ---------- */
 .layout {
   flex: 1;

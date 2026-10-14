@@ -24,13 +24,51 @@ function archiveName() {
   return 'Xray-linux-64.zip';
 }
 
-function binPath() { return path.join(BIN_DIR, exeName()); }
+function appDataDir() {
+  try {
+    const { app } = require('electron');
+    if (app && app.getPath) return app.getPath('userData');
+  } catch (_) { }
+  return path.join(ROOT, 'data');
+}
 
-function isBinAvailable() { try { return fs.existsSync(binPath()); } catch (_) { return false; } }
+function binDir() {
+  try {
+    const { app } = require('electron');
+    if (app && app.isPackaged) return path.join(app.getPath('userData'), 'bin');
+  } catch (_) { }
+  return BIN_DIR;
+}
+
+function binPath() { return path.join(binDir(), exeName()); }
+
+function extraExeCandidates() {
+  const out = [];
+  try {
+    const { app } = require('electron');
+    if (!app || !app.getPath) return out;
+    if (app.isPackaged) {
+      const exeDir = path.dirname(app.getPath('exe'));
+      out.push(path.join(exeDir, 'bin', exeName()));
+      out.push(path.join(exeDir, exeName()));
+      out.push(path.join(app.getPath('userData'), 'bin', exeName()));
+    }
+  } catch (_) { }
+  return out;
+}
+
+function isBinAvailable() {
+  if (fs.existsSync(binPath())) return true;
+  for (const c of extraExeCandidates()) { try { if (fs.existsSync(c)) return true; } catch (_) { } }
+  return false;
+}
 
 function resolveXray(settings) {
-  if (settings && settings.xrayPath && fs.existsSync(settings.xrayPath)) return settings.xrayPath;
-  if (isBinAvailable()) return binPath();
+  const custom = settings && settings.xrayPath;
+  if (custom && fs.existsSync(custom)) return custom;
+  for (const c of [binPath(), ...extraExeCandidates()]) {
+    try { if (fs.existsSync(c)) return c; } catch (_) { }
+  }
   return null;
 }
 
@@ -57,6 +95,8 @@ async function candidateUrls(settings) {
   out.push(`https://ghproxy.net/${base}`);
   out.push(`https://gh-proxy.com/${base}`);
   out.push(`https://mirror.ghproxy.com/${base}`);
+  out.push(`https://github.moeyy.xyz/${base}`);
+  out.push(`https://hub.nuaa.cf/${base}`);
   return out;
 }
 
@@ -125,6 +165,7 @@ async function downloadXray(send, settings) {
   send({ phase: 'version' });
   const urls = await candidateUrls(settings);
   fs.mkdirSync(TMP_DIR, { recursive: true });
+  const target = binDir();
   const stageDir = path.join(TMP_DIR, 'stage');
   const zipPath = path.join(TMP_DIR, 'xray.zip');
   let lastError = null;
@@ -138,25 +179,26 @@ async function downloadXray(send, settings) {
       await runUnzip(zipPath, stageDir);
       const binary = findBinary(stageDir, exeName());
       if (!binary) throw new Error('فایل اجرایی xray در آرشیو پیدا نشد');
-      const previous = binPath();
+      const finalPath = path.join(target, exeName());
+      const previous = fs.existsSync(finalPath) ? finalPath : null;
       const keepOld = path.join(TMP_DIR, 'xray-previous');
       fs.rmSync(keepOld, { force: true });
-      if (isBinAvailable()) {
-        try { fs.renameSync(previous, keepOld); } catch (_) { fs.rmSync(previous, { force: true }); }
+      if (previous) {
+        try { fs.renameSync(finalPath, keepOld); } catch (_) { fs.rmSync(finalPath, { force: true }); }
       }
       try {
-        fs.mkdirSync(BIN_DIR, { recursive: true });
-        fs.copyFileSync(binary, binPath());
-        fs.chmodSync(binPath(), 0o755);
+        fs.mkdirSync(target, { recursive: true });
+        fs.copyFileSync(binary, finalPath);
+        fs.chmodSync(finalPath, 0o755);
       } catch (e) {
-        if (fs.existsSync(keepOld)) fs.renameSync(keepOld, binPath());
+        if (fs.existsSync(keepOld)) fs.renameSync(keepOld, finalPath);
         throw e;
       }
       fs.rmSync(keepOld, { force: true });
       try { fs.rmSync(zipPath, { force: true }); } catch (_) { }
       fs.rmSync(stageDir, { recursive: true, force: true });
       send({ phase: 'done', url });
-      return binPath();
+      return finalPath;
     } catch (e) {
       lastError = e;
       send({ phase: 'retry', url, error: String((e && e.message) || e) });
@@ -257,4 +299,4 @@ function sweepTemp() {
   } catch (_) { }
 }
 
-module.exports = { binPath, isBinAvailable, resolveXray, ensureXray, downloadXray, start, startSession, stop, waitReady, sweepTemp, archiveName, latestVersion, BIN_DIR };
+module.exports = { binPath, binDir, isBinAvailable, resolveXray, ensureXray, downloadXray, start, startSession, stop, waitReady, sweepTemp, archiveName, latestVersion, BIN_DIR };

@@ -337,6 +337,9 @@ function renderXrayChip() {
   const chip = $('#xray-chip');
   chip.dataset.state = state.xrayAvailable ? 'ok' : 'bad';
   chip.textContent = state.xrayAvailable ? 'هسته Xray آماده' : 'Xray نصب نیست — دانلود کنید';
+  chip.style.cursor = state.xrayAvailable ? 'default' : 'pointer';
+  chip.title = state.xrayAvailable ? '' : 'برای نصب Xray اینجا کلیک کنید (تنظیمات)';
+  $('#xray-banner').classList.toggle('hidden', state.xrayAvailable);
 }
 
 function renderAll() {
@@ -818,6 +821,13 @@ function bindEvents() {
   $('#btn-save-settings').addEventListener('click', saveSettings);
   $('#btn-xray-select').addEventListener('click', pickXrayPath);
   $('#btn-xray-download').addEventListener('click', downloadXray);
+  $('#banner-xray-download').addEventListener('click', downloadXray);
+  $('#banner-xray-select').addEventListener('click', pickXrayPath);
+  $('#xray-chip').addEventListener('click', () => {
+    if (state.xrayAvailable) return;
+    $('.tab[data-tab="settings"]').click();
+    $('#btn-xray-download').focus();
+  });
   $('#btn-blacklist-clear').addEventListener('click', async () => {
     if (!window.confirm('لیست سیاه خالی شود؟ کانفیگ‌های حذف‌شده دوباره در جمع‌آوری می‌آیند.')) return;
     state.blacklist = await call(api.blacklist.clear());
