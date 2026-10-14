@@ -82,7 +82,7 @@
       "shortcutName": "V2Ray Config Checker"
     },
     "portable": {
-      "artifactName": "${productName}-${version}-portable.${ext}"
+      "artifactName": "V2Ray-Config-Checker-${version}-portable.${ext}"
     }
   }
 }
