@@ -1,0 +1,88 @@
+{
+  "name": "v2ray-config-checks",
+  "productName": "V2Ray Config Checker",
+  "version": "1.0.0",
+  "description": "جمع‌آوری، تست و اتصال کانفیگ‌های V2Ray (VLESS/VMess/Trojan/SS) و بررسی دسترسی به Gemini و YouTube از طریق هر کانفیگ",
+  "main": "main.js",
+  "license": "MIT",
+  "author": "V2Ray Config Checker contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/almas77abolfazl/v2ray-config-checker.git"
+  },
+  "homepage": "https://github.com/almas77abolfazl/v2ray-config-checker#readme",
+  "keywords": [
+    "v2ray",
+    "xray",
+    "vless",
+    "vmess",
+    "trojan",
+    "shadowsocks",
+    "gemini",
+    "youtube",
+    "electron"
+  ],
+  "scripts": {
+    "start": "electron .",
+    "start:dev": "electron . --dev",
+    "test": "node scripts/selftest.js",
+    "make:icon": "node scripts/make-icon.js",
+    "build": "electron-builder --win --x64",
+    "build:dir": "electron-builder --win --x64 --dir",
+    "build:portable": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^33.4.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.vcc.configchecker",
+    "productName": "V2Ray Config Checker",
+    "copyright": "MIT License",
+    "directories": {
+      "output": "releases",
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "assets/icon.png",
+      "scripts/selftest.js",
+      "!**/*.log",
+      "!**/node_modules/**"
+    ],
+    "asar": true,
+    "compression": "maximum",
+    "win": {
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-win-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "V2Ray Config Checker"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  }
+}

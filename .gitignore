@@ -1,0 +1,17 @@
+node_modules/
+bin/
+data/*.json
+releases/*.exe
+releases/*.blockmap
+releases/*.yml
+releases/*.yaml
+releases/win-unpacked/
+releases/*.7z
+dist/
+*.log
+.DS_Store
+
+.freebuff/
+.eb-cache/
+electron-out.log
+electron-err.log
