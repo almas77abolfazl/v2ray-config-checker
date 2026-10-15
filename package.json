@@ -1,7 +1,7 @@
 {
   "name": "v2ray-config-checks",
   "productName": "V2Ray Config Checker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "جمع‌آوری، تست و اتصال کانفیگ‌های V2Ray (VLESS/VMess/Trojan/SS) و بررسی دسترسی به Gemini و YouTube از طریق هر کانفیگ",
   "main": "main.js",
   "license": "MIT",

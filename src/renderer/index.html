@@ -181,15 +181,38 @@
       </div>
 
       <div class="setting-block">
-        <label class="setting-label">لیست سیاه</label>
+        <label class="setting-label">لیست سیاه (کانفیگ‌های وصل‌نشده)</label>
         <label class="checkbox">
           <input type="checkbox" id="set-autoblacklist">
-          <span>کانفیگ‌های وصل‌نشده خودکار به لیست سیاه بروند (در جمع‌آوری بعدی نیایند)</span>
+          <span>کانفیگ‌های وصل‌نشده خودکار به لیست سیاه بروند</span>
         </label>
         <div class="row">
-          <span class="setting-note" id="blacklist-count">۰ کانفیگ</span>
-          <button class="btn btn-sm btn-ghost" id="btn-blacklist-clear">پاک کردن لیست سیاه</button>
+          <select class="input" id="set-blacklist-hours">
+            <option value="6">۶ ساعت — کانفیگ موقتاً قطعی زود برمی‌گردد</option>
+            <option value="12">۱۲ ساعت</option>
+            <option value="24">۲۴ ساعت (پیش‌فرض)</option>
+            <option value="48">۴۸ ساعت</option>
+            <option value="0">بدون انقضا — هرگز برنگرد</option>
+          </select>
         </div>
+        <p class="hint">هر ورودی بعد از این مدت منقضی می‌شود و کانفیگ دوباره در جمع‌آوری می‌آید (سرورهای موقتاً خاموش دوباره تست می‌شوند).</p>
+        <div class="row">
+          <span class="setting-note" id="blacklist-count">۰ کانفیگ</span>
+          <button class="btn btn-sm btn-ghost" id="btn-blacklist-clear">پاک کردن کل لیست سیاه</button>
+        </div>
+      </div>
+
+      <div class="setting-block">
+        <label class="setting-label">فیلتر پروتکل‌ها</label>
+        <label class="checkbox">
+          <input type="checkbox" id="set-skip-unsupported" checked>
+          <span>کانفیگ‌های پشتیبانی‌نشده (HY2/Hysteria2/SOCKS/...) جمع‌آوری نشوند</span>
+        </label>
+        <p class="hint">این پروتکل‌ها با هسته Xray قابل تست نیستند. اگر خاموش کنید، در لیست با عنوان «پشتیبانی نشده» می‌آیند و با دکمهٔ «پاکسازی» حذف می‌شوند.</p>
+      </div>
+
+      <div class="setting-block">
+        <label class="setting-label">منابع تلگرام</label>
       </div>
 
       <div class="setting-block">

@@ -95,7 +95,7 @@ function registerIpc() {
     if (sources.length === 0) throw new Error('هیچ منبع فعالی وجود ندارد');
     const results = await collector.collect(sources, settings, (p) => send('collect:progress', p));
     const seen = new Set();
-    const configs = [];
+    let configs = [];
     let errors = 0;
     for (const r of results) {
       if (r.error) errors += 1;
@@ -103,9 +103,28 @@ function registerIpc() {
         if (!seen.has(cfg.id)) { seen.add(cfg.id); configs.push(cfg); }
       }
     }
-    const blocked = store.getBlacklist();
-    const filtered = blacklist.filterConfigs(configs, blocked);
-    return { configs: filtered, blocked: configs.length - filtered.length, errors, sources: sources.length };
+    let skippedUnsupported = 0;
+    if (settings.skipUnsupported !== false) {
+      const before = configs.length;
+      configs = configs.filter((c) => c.supported !== false);
+      skippedUnsupported = before - configs.length;
+    }
+    let list = store.getBlacklist();
+    const ttl = blacklist.ttlFromHours(settings.blacklistHours);
+    const pruned = blacklist.prune(list, ttl);
+    if (pruned.length !== list.length) {
+      store.saveBlacklist(pruned);
+      list = pruned;
+    }
+    const blocked = list;
+    const filtered = blacklist.filterConfigs(configs, blocked, ttl);
+    return {
+      configs: filtered,
+      blocked: configs.length - filtered.length,
+      skippedUnsupported,
+      errors,
+      sources: sources.length
+    };
   });
 
   handle('configs:import', ({ text }) => {
@@ -226,10 +245,14 @@ function registerIpc() {
   handle('session:status', () => session.status());
 
   handle('cache:get', () => {
+    const settings = store.getSettings();
     const cache = store.getCache();
+    const ttl = blacklist.ttlFromHours(settings.blacklistHours);
+    let list = store.getBlacklist();
+    const pruned = blacklist.prune(list, ttl);
+    if (pruned.length !== list.length) { store.saveBlacklist(pruned); list = pruned; }
     if (cache && Array.isArray(cache.configs)) {
-      const blocked = store.getBlacklist();
-      cache.configs = blacklist.filterConfigs(cache.configs, blocked);
+      cache.configs = blacklist.filterConfigs(cache.configs, list, ttl);
     }
     return cache;
   });

@@ -154,6 +154,30 @@ const index = blacklist.buildIndex(bl);
 check('indexed blocked by id', blacklist.isBlockedIndexed(index, testCfg));
 check('indexed different uri not blocked', !blacklist.isBlockedIndexed(index, { id: 'z', raw: 'vless://u@b.example.com:443?type=tcp#Y' }));
 
+console.log('\n[7b] Blacklist expiry (temporarily dead servers)');
+const MS_DAY = 24 * 3600 * 1000;
+const MS_HOUR = 3600 * 1000;
+const cfgA = { id: 'cfgA', raw: 'vless://a@a.example.com:443#A', address: 'a.example.com' };
+const fresh = { id: 'cfgFresh', raw: 'vless://f@f.example.com:443#F', address: 'f.example.com' };
+const ttlList = [
+  Object.assign({}, blacklist.makeEntry(cfgA), { at: Date.now() - 2 * MS_DAY }),
+  blacklist.makeEntry(fresh)
+];
+check('ttlFromHours 24h', blacklist.ttlFromHours(24) === MS_DAY, blacklist.ttlFromHours(24));
+check('ttlFromHours 0 = never expire', blacklist.ttlFromHours(0) === 0);
+check('fresh entry still blocked', blacklist.filterConfigs([fresh], ttlList, 24 * MS_HOUR).length === 0);
+check('expired entry ignored (config returns)', blacklist.filterConfigs([cfgA], ttlList, 24 * MS_HOUR).length === 1);
+check('never-expire mode blocks both', blacklist.filterConfigs([cfgA, fresh], ttlList, 0).length === 0);
+check('expired ignored via isBlocked', !blacklist.isBlocked(ttlList, cfgA, 24 * MS_HOUR));
+check('fresh blocked via isBlocked', blacklist.isBlocked(ttlList, fresh, 24 * MS_HOUR));
+const prunedBl = blacklist.prune(ttlList, 24 * MS_HOUR);
+check('prune drops expired entries', prunedBl.length === 1 && prunedBl[0].id === 'cfgFresh', prunedBl.length);
+check('prune keeps all when ttl=0', blacklist.prune(ttlList, 0).length === 2);
+const shortTtlList = [Object.assign({}, blacklist.makeEntry(cfgA), { at: Date.now() - 3 * MS_HOUR }), blacklist.makeEntry(fresh)];
+check('6h ttl keeps 3h-old entry', blacklist.filterConfigs([cfgA], shortTtlList, 6 * MS_HOUR).length === 0, '6h ttl should still block a 3h-old entry');
+const refreshed = blacklist.addEntry([blacklist.makeEntry(cfgA)], blacklist.makeEntry(cfgA));
+check('re-add refreshes timestamp', refreshed.length === 1 && refreshed[0].at >= Date.now() - 5000, refreshed[0] && refreshed[0].at);
+
 console.log('\n[8] Telegram source scraping');
 const collector = require(path.join(__dirname, '..', 'src', 'core', 'collector'));
 const tgHtml =

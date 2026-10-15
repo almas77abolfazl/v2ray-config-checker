@@ -28,6 +28,8 @@ const DEFAULT_SETTINGS = {
   autoTest: false,
   autoBlacklist: true,
   removeOffline: true,
+  skipUnsupported: true,
+  blacklistHours: 24,
   telegramNoReader: false,
   maxPerSource: 250
 };

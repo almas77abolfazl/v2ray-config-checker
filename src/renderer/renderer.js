@@ -315,6 +315,8 @@ function renderSettings() {
   $('#set-timeout').value = String(s.timeoutMs || 12000);
   $('#set-autotest').checked = !!s.autoTest;
   $('#set-autoblacklist').checked = s.autoBlacklist !== false;
+  $('#set-blacklist-hours').value = String(s.blacklistHours == null ? 24 : s.blacklistHours);
+  $('#set-skip-unsupported').checked = s.skipUnsupported !== false;
   $('#chk-remove-offline').checked = s.removeOffline !== false;
   $('#set-telegram-reader').checked = !s.telegramNoReader;
   $('#blacklist-count').textContent = state.blacklist.length + ' کانفیگ در لیست سیاه';
@@ -414,8 +416,9 @@ async function collectNow() {
     const data = await call(api.collect());
     mergeConfigs(data.configs);
     const failNote = data.errors ? ' (' + data.errors + ' منبع ناموفق)' : '';
-    const blockedNote = data.blocked ? ' — ' + data.blocked + ' کانفیگ قبلاً مرده تشخیص داده شده بود' : '';
-    toast('جمع‌آوری شد: ' + data.configs.length + ' کانفیگ تازه' + failNote + blockedNote, data.errors ? 'info' : 'ok');
+    const blockedNote = data.blocked ? ' — ' + data.blocked + ' کانفیگ در لیست سیاه بود' : '';
+    const skippedNote = data.skippedUnsupported ? ' — ' + data.skippedUnsupported + ' کانفیگ پشتیبانی‌نشده نادیده گرفته شد' : '';
+    toast('جمع‌آوری شد: ' + data.configs.length + ' کانفیگ تازه' + failNote + blockedNote + skippedNote, data.errors ? 'info' : 'ok');
     if (state.settings.autoTest && data.configs.length) {
       renderAll();
       runTests(Array.from(state.configs.values()));
@@ -659,6 +662,8 @@ function readSettingsForm() {
     timeoutMs: Number($('#set-timeout').value),
     autoTest: $('#set-autotest').checked,
     autoBlacklist: $('#set-autoblacklist').checked,
+    blacklistHours: Number($('#set-blacklist-hours').value),
+    skipUnsupported: $('#set-skip-unsupported').checked,
     removeOffline: $('#chk-remove-offline').checked,
     telegramNoReader: !$('#set-telegram-reader').checked
   };
