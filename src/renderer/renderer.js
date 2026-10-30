@@ -407,6 +407,38 @@ function hideProgress() {
   $('#progress-bar').style.width = '0%';
 }
 
+async function smartFindOnlineConfigs() {
+  if (state.collecting || state.testing) return;
+  if (!state.xrayAvailable) {
+    toast('ابتدا هسته Xray را دانلود کنید (تنظیمات)', 'err');
+    $('.tab[data-tab="settings"]').click();
+    return;
+  }
+  showProgress('در حال دریافت تازه‌ترین کانفیگ‌ها…', 15);
+  state.collecting = true;
+  renderToolbarState();
+  try {
+    const data = await call(api.collect());
+    mergeConfigs(data.configs);
+    state.collecting = false;
+    renderAll();
+    
+    if (!state.configs.size) {
+      toast('هیچ کانفیگی از منابع دریافت نشد', 'err');
+      return;
+    }
+    
+    toast('شروع تست فوری کانفیگ‌ها…', 'info');
+    await runTests(Array.from(state.configs.values()), true); // true = autoClean
+  } catch (err) {
+    toast('خطا: ' + errText(err), 'err');
+  } finally {
+    state.collecting = false;
+    hideProgress();
+    renderAll();
+  }
+}
+
 async function collectNow() {
   if (state.collecting) return;
   state.collecting = true;
@@ -432,7 +464,7 @@ async function collectNow() {
   }
 }
 
-async function runTests(targetList) {
+async function runTests(targetList, autoClean) {
   if (state.testing) return;
   const source = targetList && targetList.length ? targetList : Array.from(state.configs.values());
   const list = source.filter((c) => c && c.supported !== false);
@@ -636,6 +668,24 @@ async function toggleSource(url, enabled) {
   } catch (e) { toast(errText(e), 'err'); }
 }
 
+async function quickPasteClipboard() {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (!text || !text.trim()) {
+      return toast('کلیپ‌بورد خالی است یا کانفیگی کپی نشده', 'err');
+    }
+    const list = await call(api.importText(text));
+    if (!list || !list.length) {
+      return toast('هیچ کانفیگ معتبری در کلیپ‌بورد پیدا نشد', 'err');
+    }
+    mergeConfigs(list);
+    renderAll();
+    toast(list.length + ' کانفیگ با موفقیت اضافه شد', 'ok');
+  } catch (err) {
+    toast('خطا در خواندن کلیپ‌بورد: ' + errText(err), 'err');
+  }
+}
+
 async function importText() {
   const text = $('#import-text').value;
   if (!text.trim()) return toast('متنی وارد نشده', 'err');
@@ -722,6 +772,8 @@ async function refreshBlacklist() {
 }
 
 function bindEvents() {
+  const btnSmart = $('#btn-smart-find');
+  if (btnSmart) btnSmart.addEventListener('click', smartFindOnlineConfigs);
   $('#btn-collect').addEventListener('click', collectNow);
   $('#btn-test').addEventListener('click', () => {
     runTests(state.selectedId ? [state.configs.get(state.selectedId)].filter(Boolean) : null);
@@ -735,6 +787,8 @@ function bindEvents() {
   $('#btn-export').addEventListener('click', exportGood);
   $('#btn-copy').addEventListener('click', copyGood);
   $('#btn-cleanup').addEventListener('click', cleanupUnwanted);
+  const btnPaste = $('#btn-paste-quick');
+  if (btnPaste) btnPaste.addEventListener('click', quickPasteClipboard);
 
   $('#chk-remove-offline').addEventListener('change', async (e) => {
     state.settings.removeOffline = e.target.checked;

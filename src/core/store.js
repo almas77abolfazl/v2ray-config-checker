@@ -10,28 +10,27 @@ const IS_PACKAGED = electronApp ? electronApp.isPackaged : false;
 const DATA_DIR = IS_PACKAGED ? path.join(electronApp.getPath('userData'), 'data') : path.join(ROOT, 'data');
 
 const DEFAULT_SOURCES = [
-  { name: 'Epodonios · VLESS', url: 'https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/Splitted-By-Protocol/vless.txt', protocol: 'vless', enabled: true },
-  { name: 'Telegram Collector · VLESS', url: 'https://raw.githubusercontent.com/soroushmirzaei/telegram-configs-collector/main/protocols/vless', protocol: 'vless', enabled: true },
-  { name: 'Mahdibland Aggregator', url: 'https://raw.githubusercontent.com/mahdibland/V2RayAggregator/master/sub/sub_merge.txt', protocol: 'all', enabled: true },
-  { name: 'Epodonios · All', url: 'https://raw.githubusercontent.com/Epodonios/v2ray-configs/main/All_Configs_Sub.txt', protocol: 'all', enabled: true },
-  { name: 'aiboxx · Daily', url: 'https://raw.githubusercontent.com/aiboxx/v2rayfree/main/v2ray', protocol: 'all', enabled: true },
-  { name: 'Pawdroid · Free Servers', url: 'https://raw.githubusercontent.com/Pawdroid/Free-servers/main/sub', protocol: 'all', enabled: true },
-  { name: 'تلگرام iranconnecting', url: 'https://t.me/s/iranconnecting', protocol: 'all', type: 'telegram', enabled: true },
-  { name: 'تلگرام v2rayng_org', url: 'https://t.me/s/v2rayng_org', protocol: 'all', type: 'telegram', enabled: true }
+  { name: 'Barry-Far · Sub4 (Reality و تست‌شده ایران)', url: 'https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub4.txt', protocol: 'vless', enabled: true },
+  { name: 'Barry-Far · VLESS تجمیعی', url: 'https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Splitted-By-Protocol/vless.txt', protocol: 'vless', enabled: true },
+  { name: 'Barry-Far · Sub1 (میکس فعال)', url: 'https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub1.txt', protocol: 'all', enabled: true },
+  { name: 'Barry-Far · Sub3', url: 'https://raw.githubusercontent.com/barry-far/V2ray-Config/main/Sub3.txt', protocol: 'all', enabled: true },
+  { name: 'Mineral · گره‌های منتخب', url: 'https://raw.githubusercontent.com/LalatinaHub/Mineral/master/result/nodes', protocol: 'all', enabled: false },
+  { name: 'کانال تلگرام v2rayng_org', url: 'https://t.me/s/v2rayng_org', protocol: 'all', type: 'telegram', enabled: true },
+  { name: 'کانال تلگرام iranconnecting', url: 'https://t.me/s/iranconnecting', protocol: 'all', type: 'telegram', enabled: false }
 ];
 
 const DEFAULT_SETTINGS = {
   xrayPath: '',
   xrayDownloadUrl: '',
-  concurrency: 6,
-  timeoutMs: 12000,
+  concurrency: 12,
+  timeoutMs: 6000,
   autoTest: false,
   autoBlacklist: true,
   removeOffline: true,
   skipUnsupported: true,
-  blacklistHours: 24,
+  blacklistHours: 12,
   telegramNoReader: false,
-  maxPerSource: 250
+  maxPerSource: 60
 };
 
 function readJson(file, fallback) {

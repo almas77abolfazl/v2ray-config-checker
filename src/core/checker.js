@@ -45,7 +45,7 @@ function curlRequest(url, socksPort, timeoutMs, keepBody) {
     const args = [
       '-s',
       '-m', String(Math.max(1, Math.ceil(timeoutMs / 1000))),
-      '--connect-timeout', '8',
+      '--connect-timeout', '4',
       '--socks5-hostname', '127.0.0.1:' + socksPort,
       '-A', USER_AGENT,
       '-L', '--max-redirs', '5',
@@ -90,7 +90,7 @@ function curlRequest(url, socksPort, timeoutMs, keepBody) {
 
 async function checkConnection(port, budgetMs) {
   const budget = Math.max(1500, Number(budgetMs) || 6000);
-  const first = Math.max(1500, Math.round(budget * 0.6));
+  const first = Math.max(1200, Math.round(budget * 0.55));
   const fallbackBudget = Math.max(1200, Math.min(2500, budget - first));
   const primary = await curlRequest('https://www.gstatic.com/generate_204', port, first, false);
   if (primary.status !== 0) {

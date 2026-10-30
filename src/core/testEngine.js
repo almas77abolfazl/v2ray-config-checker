@@ -78,18 +78,13 @@ async function testOne(cfg, budgetMs, xrayExe) {
   if (!parsed.outbound) {
     return { status: 'offline', gemini: 'error', youtube: 'error', note: parsed.reason || 'پشتیبانی نمی‌شود' };
   }
-  const budget = Math.max(6000, Number(budgetMs) || 12000);
+  const budget = Math.max(3500, Number(budgetMs) || 6000);
   const deadline = Date.now() + budget;
   const left = () => deadline - Date.now();
   let handle = null;
   let port = null;
   try {
-    const tcpLeft = Math.min(TCP_TIMEOUT_MS, left());
-    if (tcpLeft <= 0) return { status: 'offline', gemini: 'error', youtube: 'error', note: 'بودجه زمان تمام شد' };
-    const reachable = await tcpReachable(parsed.address, parsed.port, tcpLeft);
-    if (!reachable) {
-      return { status: 'offline', gemini: 'error', youtube: 'error', note: 'سرور از این دستگاه قابل دسترسی نیست' };
-    }
+    // bypass direct raw TCP ping for Iran DPI / Reality compatibility
     port = await allocPort();
     handle = xrayCore.start(parsed.outbound, port, xrayExe);
     activeHandles.add(handle);
@@ -128,7 +123,7 @@ async function run(configs, options, onUpdate, xrayExe) {
     return { total: 0, tested: 0, online: 0, offline: 0, geminiOpen: 0, geminiCountry: 0, geminiBlocked: 0, youtubeOpen: 0, offlineIds: [], onlineIds: [], skipped: true };
   }
   running = true;
-  const concurrency = Math.max(1, Math.min(16, Number(options && options.concurrency) || 6));
+  const concurrency = Math.max(1, Math.min(24, Number(options && options.concurrency) || 12));
   const timeoutMs = Math.max(6000, Number(options && options.timeoutMs) || 12000);
   const summary = {
     total: list.length, tested: 0, online: 0, offline: 0,

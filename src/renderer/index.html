@@ -45,21 +45,23 @@
 
     <div class="toolbar">
       <div class="tool-row">
-        <button class="btn btn-primary" id="btn-collect"></button>
-        <button class="btn" id="btn-test"></button>
+        <button class="btn btn-primary" id="btn-smart-find" title="دریافت خودکار، تست سریع و نمایش فقط کانفیگ‌های ۱۰۰٪ آنلاین">⚡ دریافت و تست سریع</button>
+        <button class="btn btn-ghost" id="btn-collect" title="فقط دانلود و دریافت کانفیگ‌ها از منابع"></button>
+        <button class="btn" id="btn-test" title="تست اتصال و سنجش سرعت کانفیگ‌ها"></button>
+        <button class="btn btn-ghost" id="btn-paste-quick" title="افزودن و پردازش مستقیم کانفیگ‌ها از کلیپ‌بورد سیستم">📋 چسباندن از کلیپ‌بورد</button>
         <button class="btn hidden" id="btn-connect">اتصال به انتخاب‌شده</button>
         <button class="btn btn-danger hidden" id="btn-stop">توقف</button>
         <span class="toolbar-sep"></span>
-        <label class="check-inline" title="بعد از پایان تست، کانفیگ‌های وصل‌نشده از لیست پاک شوند">
+        <label class="check-inline" title="بعد از پایان تست، کانفیگ‌های وصل‌نشده به طور خودکار از جدول پاک شوند">
           <input type="checkbox" id="chk-remove-offline" checked>
-          <span>حذف آفلاین‌ها</span>
+          <span>پاکسازی خودکار آفلاین‌ها</span>
         </label>
         <span class="toolbar-spacer"></span>
-        <button class="btn btn-ghost" id="btn-export"></button>
-        <button class="btn btn-ghost" id="btn-copy"></button>
-        <button class="btn btn-ghost" id="btn-cleanup" title="حذف آفلاین‌ها، پشتیبانی‌نشده‌ها و تست‌نشده‌ها">پاکسازی</button>
+        <button class="btn btn-ghost" id="btn-copy" title="کپی کردن کانفیگ‌های آنلاین به کلیپ‌بورد"></button>
+        <button class="btn btn-ghost" id="btn-export" title="ذخیره کانفیگ‌های سالم در فایل متنی"></button>
+        <button class="btn btn-ghost" id="btn-cleanup" title="حذف یکجای آفلاین‌ها و تست‌نشده‌ها">پاکسازی لیست</button>
         <div class="search-box">
-          <input class="input" id="search" type="text" placeholder="جستجو در نام، آدرس یا لینک…">
+          <input class="input" id="search" type="text" placeholder="جستجو در نام، سرور یا پروتکل…">
         </div>
       </div>
       <div class="tool-row">

@@ -23,8 +23,8 @@
     "electron"
   ],
   "scripts": {
-    "start": "electron .",
-    "start:dev": "electron . --dev",
+    "start": "node node_modules/electron/cli.js .",
+    "start:dev": "node node_modules/electron/cli.js . --dev",
     "test": "node scripts/selftest.js",
     "make:icon": "node scripts/make-icon.js",
     "build": "electron-builder --win --x64",
