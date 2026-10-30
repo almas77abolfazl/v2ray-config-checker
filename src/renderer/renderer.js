@@ -188,28 +188,37 @@ function connectedId() {
 
 function rowHtml(c, i) {
   const cid = connectedId();
-  const rowCls = [c.id === cid ? 'is-connected' : '', c.id === state.selectedId ? 'selected' : ''].join(' ').trim();
+  const isConn = c.id === cid;
+  const rowCls = [isConn ? 'is-connected' : '', c.id === state.selectedId ? 'selected' : ''].join(' ').trim();
+  
   const connBtn = c.supported === false
     ? ''
-    : cid === c.id
-      ? '<button class="icon-btn stop" data-act="disconnect" title="قطع اتصال">' + ICONS.stop + '</button>'
-      : '<button class="icon-btn connect" data-act="connect" title="اتصال و تنظیم پروکسی سیستمی">' + ICONS.plug + '</button>';
+    : isConn
+      ? '<button class="btn btn-sm btn-danger-pill" data-act="disconnect">قطع اتصال</button>'
+      : '<button class="btn btn-sm btn-connect-pill" data-act="connect">اتصال</button>';
+
+  // Service badges
+  const gemOk = c.gemini === 'open';
+  const ytOk = c.youtube === 'open';
+  const serviceBadges = `
+    <div class="services-mini">
+      <span class="badge-mini ${ytOk ? 'badge-ok' : c.youtube === 'country' ? 'badge-warn' : 'badge-off'}" title="یوتیوب: ${c.youtube || 'تست نشده'}">YT</span>
+      <span class="badge-mini ${gemOk ? 'badge-ok' : c.gemini === 'country' ? 'badge-warn' : 'badge-off'}" title="جمنای: ${c.gemini || 'تست نشده'}">AI</span>
+    </div>
+  `;
+
   return (
     '<tr data-id="' + c.id + '"' + (rowCls ? ' class="' + rowCls + '"' : '') + '>' +
     '<td class="col-index">' + (i + 1) + '</td>' +
-    '<td><div class="cell-name"><span class="n" title="' + esc(c.name) + '">' + esc(c.name) + '</span><span class="o">' + esc(c.origin) + '</span></div></td>' +
+    '<td><div class="cell-name"><span class="n" title="' + esc(c.name) + '">' + esc(c.name) + '</span><span class="o">' + esc(c.origin || '') + '</span></div></td>' +
     '<td>' + protocolBadge(c.protocol) + '</td>' +
-    '<td><span class="addr" title="' + esc(c.address) + '">' + esc(c.address) + '</span></td>' +
-    '<td class="col-port">' + esc(c.port) + '</td>' +
-    '<td><div class="net"><span>' + esc(c.network || '—') + '</span><span>' + esc(c.security || '—') + '</span></div></td>' +
     '<td class="col-latency" data-cell="latency">' + fmtLatency(c.latencyMs) + '</td>' +
     '<td data-cell="status">' + statusPill(c) + '</td>' +
-    '<td data-cell="gemini">' + servicePill(c, 'gemini') + '</td>' +
-    '<td data-cell="youtube">' + servicePill(c, 'youtube') + '</td>' +
+    '<td data-cell="services">' + serviceBadges + '</td>' +
     '<td class="col-actions"><div class="actions">' +
     (c.supported === false ? '' : '<button class="icon-btn" data-act="test" title="تست این کانفیگ">' + ICONS.play + '</button>') +
     connBtn +
-    '<button class="icon-btn" data-act="copy" title="کپی لینک کانفیگ">' + ICONS.copy + '</button>' +
+    '<button class="icon-btn" data-act="copy" title="کپی کانفیگ">' + ICONS.copy + '</button>' +
     '</div></td>' +
     '</tr>'
   );
@@ -787,6 +796,16 @@ function bindEvents() {
   $('#btn-export').addEventListener('click', exportGood);
   $('#btn-copy').addEventListener('click', copyGood);
   $('#btn-cleanup').addEventListener('click', cleanupUnwanted);
+
+  const panel = $('#side-panel');
+  const btnToggle = $('#btn-toggle-panel');
+  const btnClose = $('#btn-close-panel');
+  if (btnToggle && panel) {
+    btnToggle.addEventListener('click', () => panel.classList.toggle('hidden'));
+  }
+  if (btnClose && panel) {
+    btnClose.addEventListener('click', () => panel.classList.add('hidden'));
+  }
   const btnPaste = $('#btn-paste-quick');
   if (btnPaste) btnPaste.addEventListener('click', quickPasteClipboard);
 

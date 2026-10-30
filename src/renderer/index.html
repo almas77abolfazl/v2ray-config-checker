@@ -12,10 +12,18 @@
   <div class="brand">
     <div class="logo" id="logo-icon"></div>
     <div class="titles">
-      <h1>بررسی‌کننده کانفیگ V2Ray</h1>
-      <span id="xray-chip" class="chip chip-muted" data-state="loading">در حال بررسی هسته…</span>
+      <h1>V2Ray Config Checker</h1>
+      <span id="xray-chip" class="chip chip-muted" data-state="loading">بررسی هسته…</span>
     </div>
   </div>
+
+  <div class="header-center">
+    <button class="icon-nav-btn" id="btn-toggle-panel" title="منابع و تنظیمات">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>تنظیمات و منابع</span>
+    </button>
+  </div>
+
   <div class="win-controls">
     <button class="win-btn" id="win-min" title="کوچک کردن"></button>
     <button class="win-btn" id="win-max" title="بزرگ کردن"></button>
@@ -25,7 +33,7 @@
 
 <div id="connect-bar" class="connect-bar hidden">
   <span class="conn-dot"></span>
-  <span class="conn-label">متصل</span>
+  <span class="conn-label">متصل به سرور</span>
   <strong id="conn-name">—</strong>
   <span class="conn-meta" id="conn-meta"></span>
   <span class="conn-spacer"></span>
@@ -33,53 +41,51 @@
 </div>
 
 <div id="xray-banner" class="xray-banner hidden">
-  <span class="xray-banner-text">هسته <strong>Xray-core</strong> نصب نیست — بدون آن امکان تست و اتصال کانفیگ‌ها فعال نیست.</span>
-  <button class="btn btn-primary btn-sm" id="banner-xray-download">دانلود Xray-core</button>
+  <span class="xray-banner-text">هسته <strong>Xray-core</strong> آماده نیست — امکان تست و پروکسی فعال نیست.</span>
+  <button class="btn btn-primary btn-sm" id="banner-xray-download">دانلود خودکار Xray</button>
   <button class="btn btn-sm btn-ghost" id="banner-xray-select">انتخاب فایل xray.exe</button>
 </div>
 
 <main class="layout">
-
   <section class="content">
-    <div class="stats" id="stats"></div>
 
-    <div class="toolbar">
-      <div class="tool-row">
-        <button class="btn btn-primary" id="btn-smart-find" title="دریافت خودکار، تست سریع و نمایش فقط کانفیگ‌های ۱۰۰٪ آنلاین">⚡ دریافت و تست سریع</button>
-        <button class="btn btn-ghost" id="btn-collect" title="فقط دانلود و دریافت کانفیگ‌ها از منابع"></button>
-        <button class="btn" id="btn-test" title="تست اتصال و سنجش سرعت کانفیگ‌ها"></button>
-        <button class="btn btn-ghost" id="btn-paste-quick" title="افزودن و پردازش مستقیم کانفیگ‌ها از کلیپ‌بورد سیستم">📋 چسباندن از کلیپ‌بورد</button>
-        <button class="btn hidden" id="btn-connect">اتصال به انتخاب‌شده</button>
-        <button class="btn btn-danger hidden" id="btn-stop">توقف</button>
-        <span class="toolbar-sep"></span>
-        <label class="check-inline" title="بعد از پایان تست، کانفیگ‌های وصل‌نشده به طور خودکار از جدول پاک شوند">
-          <input type="checkbox" id="chk-remove-offline" checked>
-          <span>پاکسازی خودکار آفلاین‌ها</span>
-        </label>
-        <span class="toolbar-spacer"></span>
-        <button class="btn btn-ghost" id="btn-copy" title="کپی کردن کانفیگ‌های آنلاین به کلیپ‌بورد"></button>
-        <button class="btn btn-ghost" id="btn-export" title="ذخیره کانفیگ‌های سالم در فایل متنی"></button>
-        <button class="btn btn-ghost" id="btn-cleanup" title="حذف یکجای آفلاین‌ها و تست‌نشده‌ها">پاکسازی لیست</button>
+    <div class="action-bar">
+      <div class="primary-actions">
+        <button class="btn btn-hero" id="btn-smart-find" title="دریافت تازه‌ترین کانفیگ‌ها و استخراج فقط موارد ۱۰۰٪ سالم">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>دریافت و تست سریع</span>
+        </button>
+        <button class="btn btn-secondary" id="btn-paste-quick" title="افزودن و پردازش مستقیم کانفیگ‌ها از کلیپ‌بورد سیستم">
+          📋 چسباندن کانفیگ
+        </button>
+        <button class="btn btn-secondary" id="btn-test" title="تست اتصال تمام کانفیگ‌های موجود در جدول"></button>
+        <button class="btn btn-secondary hidden" id="btn-collect"></button>
+        <button class="btn btn-danger hidden" id="btn-stop">توقف تست</button>
+      </div>
+
+      <div class="search-and-tools">
         <div class="search-box">
-          <input class="input" id="search" type="text" placeholder="جستجو در نام، سرور یا پروتکل…">
+          <input class="input" id="search" type="text" placeholder="جستجو در سرورها…">
         </div>
+        <button class="btn btn-ghost btn-icon-only" id="btn-copy" title="کپی کردن کانفیگ‌های سالم به کلیپ‌بورد"></button>
+        <button class="btn btn-ghost btn-icon-only" id="btn-export" title="ذخیره کانفیگ‌های سالم در فایل"></button>
+        <button class="btn btn-ghost btn-icon-only" id="btn-cleanup" title="حذف آفلاین‌ها">پاکسازی</button>
       </div>
-      <div class="tool-row">
-        <div class="filters" id="filters"></div>
-        <span class="row-count" id="row-count"></span>
-      </div>
+    </div>
+
+    <!-- Hidden elements required by existing JS logic -->
+    <div id="stats" style="display:none;"></div>
+    <label class="check-inline" style="display:none;"><input type="checkbox" id="chk-remove-offline" checked></label>
+    <button id="btn-connect" class="hidden" style="display:none;"></button>
+
+    <div class="status-tabs-row">
+      <div class="tabs-clean" id="filters"></div>
+      <span class="row-count" id="row-count"></span>
     </div>
 
     <div id="progress" class="progress hidden">
       <div class="progress-bar" id="progress-bar"></div>
       <div class="progress-text" id="progress-text"></div>
-    </div>
-
-    <div class="legend">
-      <span class="legend-item"><span class="legend-dot" style="background:#34d399"></span>آنلاین / سرویس باز</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#fbbf24"></span>محدودیت کشور</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#f87171"></span>آفلاین / 403</span>
-      <span class="legend-item"><span class="legend-dot" style="background:#6b7689"></span>تست‌نشده / نامشخص</span>
     </div>
 
     <div class="table-card">
@@ -88,38 +94,40 @@
           <thead>
             <tr>
               <th class="col-index">#</th>
-              <th>نام کانفیگ</th>
+              <th>نام سرور / لوکیشن</th>
               <th>پروتکل</th>
-              <th>آدرس</th>
-              <th class="col-port">پورت</th>
-              <th>شبکه / امنیت</th>
-              <th class="col-latency">تاخیر</th>
+              <th class="col-latency">پینگ</th>
               <th>وضعیت اتصال</th>
-              <th>جمنای</th>
-              <th>یوتیوب</th>
-              <th class="col-actions">اکشن</th>
+              <th>دسترسی سرویس‌ها</th>
+              <th class="col-actions">عملیات</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
         </table>
         <div class="empty" id="empty">
           <div class="empty-icon" id="empty-icon"></div>
-          <h3>هنوز کانفیگی جمع‌آوری نشده</h3>
-          <p>برای شروع دکمه «جمع‌آوری کانفیگ‌ها» را بزنید یا از پنل کناری یک لیست دستی وارد کنید.</p>
+          <h3>لیست در حال حاضر خالی است</h3>
+          <p>روی <strong>«دریافت و تست سریع»</strong> کلیک کنید تا سرورهای سالم و فعال بارگذاری شوند.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <aside class="panel">
-    <div class="tabs" id="tabs">
-      <button class="tab active" data-tab="sources">منابع</button>
-      <button class="tab" data-tab="import">لیست دستی</button>
-      <button class="tab" data-tab="settings">تنظیمات</button>
+  <!-- Slide-out Drawer Panel for Settings & Sources -->
+  <aside class="panel drawer hidden" id="side-panel">
+    <div class="panel-header">
+      <div class="tabs" id="tabs">
+        <button class="tab active" data-tab="sources">منابع</button>
+        <button class="tab" data-tab="import">ورود دستی</button>
+        <button class="tab" data-tab="settings">تنظیمات</button>
+      </div>
+      <button class="icon-btn close-panel" id="btn-close-panel" title="بستن پنل">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
     </div>
 
     <div class="tab-body" id="tab-sources">
-      <p class="hint">منابع زیر برای جمع‌آوری کانفیگ استفاده می‌شوند. می‌توانید منبع جدید (لینک سابسکریپشن) اضافه کنید.</p>
+      <p class="hint">کانال‌های تلگرام و مخازن سابسکریپشن که کانفیگ‌ها از آن‌ها واکشی می‌شوند:</p>
       <div class="sources-list" id="sources-list"></div>
       <form class="add-source" id="add-source-form">
         <input class="input" id="new-source-url" type="text" placeholder="https://example.com/sub" required>
@@ -131,20 +139,20 @@
             <option value="vmess">فقط VMess</option>
             <option value="trojan">فقط Trojan</option>
           </select>
-          <button class="btn btn-primary" type="submit" id="btn-add-source">افزودن منبع</button>
+          <button class="btn btn-primary" type="submit" id="btn-add-source">افزودن</button>
         </div>
       </form>
       <button class="btn btn-ghost btn-sm btn-block" id="btn-reset-sources">بازگردانی منابع پیش‌فرض</button>
     </div>
 
     <div class="tab-body hidden" id="tab-import">
-      <p class="hint">لینک‌های کانفیگ را (مثل نمونه‌های vless://) اینجا بچسبانید؛ هر خط یک کانفیگ. کانفیگ‌های وارد‌شده ذخیره می‌شوند.</p>
-      <textarea class="input textarea" id="import-text" rows="8" placeholder="vless://uuid@server:port?path=/&security=none&type=httpupgrade&host=cdns.com#name&#10;vmess://..."></textarea>
+      <p class="hint">لینک‌های vless:// یا vmess:// را اینجا وارد کنید (هر سطر یک کانفیگ):</p>
+      <textarea class="input textarea" id="import-text" rows="8" placeholder="vless://...&#10;vmess://..."></textarea>
       <div class="row">
         <button class="btn btn-primary" id="btn-import">افزودن به لیست</button>
         <button class="btn btn-ghost" id="btn-import-clear">پاک کردن</button>
       </div>
-      <div class="sub-title">لیست وارد‌شده (<span id="custom-count">0</span>)</div>
+      <div class="sub-title">کانفیگ‌های سفارشی ذخیره شده (<span id="custom-count">0</span>)</div>
       <div class="sources-list" id="custom-list"></div>
     </div>
 
@@ -159,78 +167,50 @@
           <button class="btn btn-primary btn-sm" id="btn-xray-download">دانلود Xray-core</button>
           <span class="setting-note" id="xray-dl-note"></span>
         </div>
-        <p class="hint">اگر دانلود خودکار از GitHub مسدود است، فایل xray.exe را از مخزن XTLS/Xray-core دانلود کنید و از طریق «انتخاب» مسیرش را بدهید.</p>
       </div>
 
       <div class="setting-block">
-        <label class="setting-label">تعداد تست همزمان</label>
+        <label class="setting-label">تعداد تست همزمان (Concurrency)</label>
         <select class="input" id="set-concurrency">
-          <option value="1">۱</option><option value="2">۲</option><option value="3">۳</option>
-          <option value="4">۴</option><option value="6">۶</option><option value="8">۸</option>
-          <option value="10">۱۰</option><option value="12">۱۲</option><option value="16">۱۶</option>
+          <option value="4">۴ موازی</option>
+          <option value="8">۸ موازی</option>
+          <option value="12">۱۲ موازی (پیشنهادی)</option>
+          <option value="16">۱۶ موازی (سریع)</option>
         </select>
-        <p class="hint">تعداد بیشتر = تست سریع‌تر ولی مصرف بیشتر CPU/پورت. پیشنهاد: ۶ تا ۸.</p>
       </div>
 
       <div class="setting-block">
         <label class="setting-label">سقف زمان هر تست (ثانیه)</label>
         <select class="input" id="set-timeout">
-          <option value="8000">۸</option><option value="10000">۱۰</option>
-          <option value="12000">۱۲</option><option value="15000">۱۵</option>
-          <option value="20000">۲۰</option><option value="30000">۳۰</option>
+          <option value="4000">۴ ثانیه (فوق سریع)</option>
+          <option value="6000">۶ ثانیه (متعادل)</option>
+          <option value="10000">۱۰ ثانیه</option>
         </select>
-        <p class="hint">برای هر کانفیگ حداکثر این مقدار صبر می‌شود (تست اتصال + بررسی Gemini) بعد نتیجه مشخص می‌شود.</p>
       </div>
 
       <div class="setting-block">
-        <label class="setting-label">لیست سیاه (کانفیگ‌های وصل‌نشده)</label>
+        <label class="setting-label">لیست سیاه (بلک‌لیست)</label>
         <label class="checkbox">
           <input type="checkbox" id="set-autoblacklist">
-          <span>کانفیگ‌های وصل‌نشده خودکار به لیست سیاه بروند</span>
+          <span>افزودن خودکار سرورهای قطع به لیست سیاه</span>
         </label>
         <div class="row">
           <select class="input" id="set-blacklist-hours">
-            <option value="6">۶ ساعت — کانفیگ موقتاً قطعی زود برمی‌گردد</option>
+            <option value="6">۶ ساعت</option>
             <option value="12">۱۲ ساعت</option>
-            <option value="24">۲۴ ساعت (پیش‌فرض)</option>
-            <option value="48">۴۸ ساعت</option>
-            <option value="0">بدون انقضا — هرگز برنگرد</option>
+            <option value="24">۲۴ ساعت</option>
           </select>
         </div>
-        <p class="hint">هر ورودی بعد از این مدت منقضی می‌شود و کانفیگ دوباره در جمع‌آوری می‌آید (سرورهای موقتاً خاموش دوباره تست می‌شوند).</p>
         <div class="row">
           <span class="setting-note" id="blacklist-count">۰ کانفیگ</span>
-          <button class="btn btn-sm btn-ghost" id="btn-blacklist-clear">پاک کردن کل لیست سیاه</button>
+          <button class="btn btn-sm btn-ghost" id="btn-blacklist-clear">پاک کردن لیست سیاه</button>
         </div>
       </div>
 
-      <div class="setting-block">
-        <label class="setting-label">فیلتر پروتکل‌ها</label>
-        <label class="checkbox">
-          <input type="checkbox" id="set-skip-unsupported" checked>
-          <span>کانفیگ‌های پشتیبانی‌نشده (HY2/Hysteria2/SOCKS/...) جمع‌آوری نشوند</span>
-        </label>
-        <p class="hint">این پروتکل‌ها با هسته Xray قابل تست نیستند. اگر خاموش کنید، در لیست با عنوان «پشتیبانی نشده» می‌آیند و با دکمهٔ «پاکسازی» حذف می‌شوند.</p>
-      </div>
-
-      <div class="setting-block">
-        <label class="setting-label">منابع تلگرام</label>
-      </div>
-
-      <div class="setting-block">
-        <label class="checkbox">
-          <input type="checkbox" id="set-autotest">
-          <span>اجرای خودکار تست بعد از جمع‌آوری</span>
-        </label>
-      </div>
-
-      <div class="setting-block">
-        <label class="setting-label">منابع تلگرام</label>
-        <label class="checkbox">
-          <input type="checkbox" id="set-telegram-reader">
-          <span>اگر تلگرام فیلتر بود، از سرویس خواندن وب (r.jina.ai) برای کانال‌ها استفاده شود</span>
-        </label>
-        <p class="hint">در غیر این صورت کانال‌ها فقط وقتی مستقیم قابلFetch باشند کار می‌کنند.</p>
+      <div class="setting-block" style="display:none;">
+        <input type="checkbox" id="set-skip-unsupported" checked>
+        <input type="checkbox" id="set-autotest">
+        <input type="checkbox" id="set-telegram-reader" checked>
       </div>
 
       <button class="btn btn-primary btn-block" id="btn-save-settings">ذخیره تنظیمات</button>
