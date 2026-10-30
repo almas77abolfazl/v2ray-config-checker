@@ -634,3 +634,28 @@ svg { width: 14px; height: 14px; flex: none; }
 }
 .toast.ok { border-color: var(--status-online); }
 .toast.err { border-color: var(--status-off); }
+
+/* ---------- Update Banner ---------- */
+.update-banner {
+  flex: none;
+  height: 40px;
+  background: linear-gradient(90deg, rgba(226, 135, 67, 0.2), rgba(226, 135, 67, 0.08));
+  border-bottom: 1px solid rgba(226, 135, 67, 0.35);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+  font-size: 12px;
+}
+.update-icon { font-size: 15px; }
+.update-text { flex: 1; color: #f5a76c; font-weight: 500; }
+.btn-update-action {
+  background: var(--accent);
+  color: #121316;
+  font-weight: 600;
+  border: none;
+  padding: 3px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-update-action:hover { background: var(--accent-hover); }

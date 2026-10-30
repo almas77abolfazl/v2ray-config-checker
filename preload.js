@@ -42,6 +42,10 @@ contextBridge.exposeInMainWorld('api', {
     save: (payload) => ipcRenderer.invoke('cache:save', payload)
   },
 
+  updater: {
+    check: () => ipcRenderer.invoke('updater:check'),
+    openUrl: (url) => ipcRenderer.invoke('updater:openUrl', { url })
+  },
   saveFile: (payload) => ipcRenderer.invoke('file:save', payload),
 
   onEvent: (cb) => {

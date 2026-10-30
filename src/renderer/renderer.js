@@ -963,6 +963,31 @@ function bindEvents() {
   });
 }
 
+
+async function checkForAppUpdates() {
+  try {
+    const res = await call(api.updater.check());
+    if (res && res.hasUpdate) {
+      const banner = $('#update-banner');
+      const text = $('#update-text');
+      const btnOpen = $('#btn-open-release');
+      const btnClose = $('#btn-close-update');
+      
+      if (banner && text && btnOpen) {
+        text.textContent = 'نسخه جدید ' + res.latestVersion + ' منتشر شد (نسخه فعلی: ' + res.currentVersion + ')';
+        banner.classList.remove('hidden');
+        
+        btnOpen.onclick = () => {
+          api.updater.openUrl(res.releaseUrl);
+        };
+        if (btnClose) {
+          btnClose.onclick = () => banner.classList.add('hidden');
+        }
+      }
+    }
+  } catch (_) {}
+}
+
 async function init() {
   bindEvents();
   try {

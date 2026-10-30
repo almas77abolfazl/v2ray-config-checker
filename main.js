@@ -1,5 +1,5 @@
 'use strict';
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
@@ -10,6 +10,7 @@ const blacklist = require('./src/core/blacklist');
 const session = require('./src/core/session');
 const xrayCore = require('./src/core/xrayCore');
 const checker = require('./src/core/checker');
+const updater = require('./src/core/updater');
 const { parseConfigsFromText, parseUri } = require('./src/core/protocols');
 
 let mainWindow = null;
@@ -257,6 +258,12 @@ function registerIpc() {
     return cache;
   });
   handle('cache:save', (p) => store.saveCache(p));
+
+    handle('updater:check', () => updater.checkUpdate());
+  handle('updater:openUrl', ({ url }) => {
+    if (url && /^https?:\/\//i.test(url)) shell.openExternal(url);
+    return true;
+  });
 
   handle('file:save', async ({ content, defaultName }) => {
     const win = BrowserWindow.getFocusedWindow() || mainWindow;
