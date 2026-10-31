@@ -40,6 +40,7 @@ const state = {
   testing: false,
   xrayAvailable: false,
   session: { connected: false },
+  connectingId: null,
   testTotal: 0,
   testDone: 0,
   renderCount: MAX_VISIBLE,
@@ -191,11 +192,14 @@ function rowHtml(c, i) {
   const isConn = c.id === cid;
   const rowCls = [isConn ? 'is-connected' : '', c.id === state.selectedId ? 'selected' : ''].join(' ').trim();
   
+  const isConnecting = state.connectingId === c.id;
   const connBtn = c.supported === false
     ? ''
-    : isConn
-      ? '<button class="btn btn-sm btn-danger-pill" data-act="disconnect">قطع اتصال</button>'
-      : '<button class="btn btn-sm btn-connect-pill" data-act="connect">اتصال</button>';
+    : isConnecting
+      ? '<button class="btn btn-sm btn-connecting-pill" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="spin-icon"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> در حال اتصال…</button>'
+      : isConn
+        ? '<button class="btn btn-sm btn-danger-pill" data-act="disconnect">قطع اتصال</button>'
+        : '<button class="btn btn-sm btn-connect-pill" data-act="connect">اتصال</button>';
 
   // Service badges
   const gemOk = c.gemini === 'open';
