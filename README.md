@@ -51,11 +51,11 @@
 
 Official Windows releases are compiled automatically via GitHub Actions:
 
-| Asset | Architecture | Description |
+| Asset | Architecture | Direct Download |
 | :--- | :--- | :--- |
-| **Installer Setup (`.exe`)** | Windows x64 | Standard NSIS installation with desktop integration |
-| **Portable Binary (`.exe`)** | Windows x64 | Zero-install standalone executable, safe for removable drives |
-| **Release Artifacts & Checksums** | Source / Multi | Direct access to builds, release notes, and commit history |
+| **Installer Setup (`.exe`)** | Windows x64 | [**Download Setup (v1.0.4)**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/download/v1.0.4/V2Ray-Config-Checker-1.0.4-win-x64.exe) |
+| **Portable Binary (`.exe`)** | Windows x64 | [**Download Portable (v1.0.4)**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/download/v1.0.4/V2Ray-Config-Checker-1.0.4-portable.exe) |
+| **All Releases & Checksums** | Source / Multi | [**GitHub Releases Archive**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest) |
 
 > **First Run Note:** If `xray.exe` is not detected in your local environment, the core supervisor can automatically fetch the official build via GitHub fallback mirrors, or you can specify a custom binary path in Settings.
 
