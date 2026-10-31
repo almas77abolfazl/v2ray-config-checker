@@ -53,9 +53,9 @@ Official Windows releases are compiled automatically via GitHub Actions:
 
 | Asset | Architecture | Direct Download |
 | :--- | :--- | :--- |
-| **Installer Setup (`.exe`)** | Windows x64 | [**Download Setup (v1.0.4)**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/download/v1.0.4/V2Ray-Config-Checker-1.0.4-win-x64.exe) |
-| **Portable Binary (`.exe`)** | Windows x64 | [**Download Portable (v1.0.4)**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/download/v1.0.4/V2Ray-Config-Checker-1.0.4-portable.exe) |
-| **All Releases & Checksums** | Source / Multi | [**GitHub Releases Archive**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest) |
+| **Installer Setup (`.exe`)** | Windows x64 | [**Download Installer (.exe)**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest/download/V2Ray-Config-Checker-win-x64.exe) |
+| **Portable Binary (`.exe`)** | Windows x64 | [**Download Portable (.exe)**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest/download/V2Ray-Config-Checker-portable.exe) |
+| **Release Assets & Checksums** | Source / Multi | [**Latest GitHub Release**](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest) |
 
 > **First Run Note:** If `xray.exe` is not detected in your local environment, the core supervisor can automatically fetch the official build via GitHub fallback mirrors, or you can specify a custom binary path in Settings.
 
