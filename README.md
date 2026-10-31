@@ -1,125 +1,137 @@
 <div align="center">
 
+<img src="assets/icon.png" width="96" height="96" alt="V2Ray Config Checker Logo" />
+
 # V2Ray Config Checker
 
-**جمع‌آوری، تست واقعی و اتصال کانفیگ‌های V2Ray — با بررسی دسترسی به Gemini و YouTube**
+**High-Performance V2Ray/Xray Node Collector, Real-Time Latency Tester & System Proxy**
 
-ساخته‌شده با Electron · هسته Xray-core · بدون فریمورک UI
+[![GitHub release](https://img.shields.io/github/v/release/almas77abolfazl/v2ray-config-checker?color=e28743&style=flat-square)](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-3db88f.svg?style=flat-square)](LICENSE)
+[![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-blue.svg?style=flat-square)](https://github.com/almas77abolfazl/v2ray-config-checker/releases)
+[![Built with Electron](https://img.shields.io/badge/Built%20with-Electron%20Vanilla-475569.svg?style=flat-square)](https://www.electronjs.org/)
+
+<br />
+
+<p align="center">
+  <a href="#-quick-download">Download</a> •
+  <a href="#-english">English</a> •
+  <a href="#-فارسی">فارسی</a> •
+  <a href="#-key-features">Features</a> •
+  <a href="#-architecture">Architecture</a>
+</p>
+
+---
+
+<br />
+
+<img src="assets/screenshot.png" width="900" alt="V2Ray Config Checker Interface" style="border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);" />
+
+<br />
 
 </div>
 
 ---
 
-## دانلود (دانلود نسخه آماده)
+## ⚡ Quick Download
 
-برای دریافت نسخه آمادهٔ ویندوز (نصب‌کننده + پرتابل) به صفحه Releases بروید:
+Download the latest pre-built Windows binaries directly from [Releases](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest):
 
-- [github.com/almas77abolfazl/v2ray-config-checker/releases](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest)
+| Package | Type | Description |
+|---|---|---|
+| **`V2Ray-Config-Checker-*-win-x64.exe`** | **Installer (NSIS)** | Full setup with customizable install path & desktop shortcut |
+| **`V2Ray-Config-Checker-*-portable.exe`** | **Portable** | Standalone zero-install executable, runs directly from USB/disk |
 
-| فایل | توضیح |
-|---|---|
-| `V2Ray Config Checker-<version>-win-x64.exe` | نصب‌کننده (NSIS) — امکان تغییر مسیر نصب و ساخت شورتکات دسکتاپ |
-| `V2Ray Config Checker-<version>-portable.exe` | نسخهٔ پرتابل بدون نصب |
-
-بعد از نصب، بار اول از تب **تنظیمات** دکمه «دانلود Xray-core» را بزنید (یا اگر GitHub از شبکهٔ شما مسدود است، فایل `xray.exe` را دستی از [XTLS/Xray-core](https://github.com/XTLS/Xray-core/releases) بگیرید و مسیرش را با دکمه «انتخاب» بدهید).
+*Note: On first launch, if Xray-core is not present on your system, the app will automatically download the official binary, or you can select your own `xray.exe` in Settings.*
 
 ---
 
-## فارسی
+## 🌐 English
 
-برنامه‌ای دسکتاپ (ویندوز) که کانفیگ‌های V2Ray را از منابع عمومی جمع‌آوری می‌کند، هر کانفیگ را **واقعاً** روی دستگاه شما تست می‌کند (با اجرای هسته Xray-core و عبور ترافیک از پروکسی محلی) و مشخص می‌کند صفحه Gemini یا YouTube از طریق آن باز می‌شود، محدودیت-country دارد یا پاسخ نمی‌دهد. در پایان با یک کلیک می‌توانید کل سیستم را روی کانفیگ دلخواه وصل کرد.
+### Overview
+**V2Ray Config Checker** is a fast, lightweight, and modern desktop application tailored specifically for censorship-heavy environments (such as Iran DPI). It automatically aggregates nodes from curated channels and repositories, tests them via an isolated local **Xray-core** process with realistic TLS handshakes, and provides a 1-click system proxy toggle.
 
-### قابلیت‌ها
+### 🚀 Key Features
 
-- **جمع‌آوری خودکار** از منابع پیش‌فرض (شش مخزن GitHub + کانال‌های تلگرام مثل `t.me/s/iranconnecting`) + افزودن هر لینک سابسکریپشن جدید + وارد کردن دستی لیست کانفیگ (هر خط یک لینک)
-  - کانال‌های تلگرام با اسکرپ صفحهٔ عمومی کانال خوانده می‌شوند؛ اگر `t.me` روی شبکهٔ شما فیلتر باشد، برنامه به‌صورت خودکار از سرویس خواندن وب `r.jina.ai` استفاده می‌کند (قابل خاموش کردن از تنظیمات — در آن حالت فقط آدرس عمومی کانال به آن سرویس ارسال می‌شود)
-- **تست واقعی موازی** تا ۱۶ کانفیگ هم‌زمان، با سقف زمان برای هر کانفیگ (پیش‌فرض ۱۲ ثانیه) و پیش‌چک TCP برای رد کردن سریع سرورهای مرده
-- **دو سرویس به‌طور هم‌زمان**: بررسی `gemini.google.com` و `youtube.com` و دسته‌بندی نتیجه به «باز می‌شود / محدودیت کشور / 403 / نامشخص»
-- **اتصال یک‌کلیکی**: انتخاب کانفیگ → تنظیم خودکار پروکسی سیستم (پورت SOCKS و HTTP محلی) با بازگردانی کامل تنظیمات قبلی هنگام قطع یا خروج؛ اگر برنامه کرش کند، نشست قبلی بازیابی و پروکسی سیستم بازگردانی می‌شود
-- **پاک‌سازی و لیست سیاه**: کانفیگ‌های وصل‌نشده (اختیاری با تأیید) حذف و به لیست سیاه می‌روند تا در جمع‌آوری‌های بعدی نیایند
-- خروجی فایل/کپی لینک کانفیگ‌های سالم، فیلتر و جستجو، ذخیره نتایج بین اجراها، رابط فارسی RTL با رندر پنجره‌ای (بدون هنگ با هزاران ردیف)
+* **Instant Smart Test ("⚡ دریافت و تست سریع"):** Fetches the freshest nodes, tests up to 12 configs in parallel, and automatically discards offline or expired entries in under 20 seconds.
+* **Specialized for Modern Anti-Censorship Protocols:** Native support for **VLESS XTLS-Reality**, WebSocket, gRPC, HTTPUpgrade, Trojan, VMess, and Shadowsocks (including SS-2022).
+* **Dual-Service Availability Checker:** Independently verifies direct access to **Google Gemini** (detecting Geo-blocking/HTTP 451) and **YouTube** streaming reachability.
+* **True DPI-Resistant Testing:** Bypasses naive TCP raw pings that trigger DPI drops; runs genuine outbound handshakes through local Xray sockets.
+* **1-Click System Proxy:** Sets and reverts Windows system proxy (`ProxyEnable` & `ProxyServer` in Registry) with graceful cleanup and auto-recovery on crash.
+* **Auto-Expiring Blacklist:** Dead servers are cached with a 12-hour TTL to prevent re-testing the same broken nodes while allowing revived servers to reappear.
+* **Zero Runtime Bloat:** Pure vanilla JavaScript frontend with virtualized rendering; smooth 60fps scrolling even with hundreds of items.
+* **Auto Update Notifier:** Checks GitHub releases on launch and notifies users whenever a newer build is published.
 
-### اجرا (حالت توسعه)
+### 🛠️ Architecture & Tech Stack
+
+```text
+├── main.js                  # Frameless Electron window, native IPC & registry proxy management
+├── preload.js               # Secure contextBridge API mapping
+├── src/
+│   ├── core/
+│   │   ├── xrayCore.js      # Xray binary manager, mirror downloader & multi-port process supervisor
+│   │   ├── protocols.js     # Decoders & parsers for vless/vmess/trojan/ss/sub URI schemes
+│   │   ├── checker.js       # Real-world traffic probing with curl.exe socks5-hostname
+│   │   ├── testEngine.js    # Concurrency queue with strict timeouts & auto-port allocation
+│   │   ├── collector.js     # Multi-source scraper (GitHub subscriptions & Telegram mirrors)
+│   │   ├── session.js       # Persistent Windows proxy session & crash recovery
+│   │   ├── blacklist.js     # Hash-based duplicate detection & TTL expiry
+│   │   └── updater.js       # Lightweight GitHub release version comparator
+│   └── renderer/            # High-performance Vanilla RTL interface with Obsidian Copper theme
+```
+
+---
+
+## 🇮🇷 فارسی
+
+### درباره پروژه
+در شرایط فعلی اینترنت و فیلترینگ شدید DPI در ایران، اکثر کانفیگ‌های عمومی ظرف چند ساعت مسدود می‌شوند یا به دلیل پروتکل‌های قدیمی (مانند VMess بدون TLS) کارایی ندارند. علاوه بر این، بسیاری از تسترهای سنتی به دلیل پینگ مستقیم TCP باعث مسدودسازی زودهنگام یا تشخیص اشتباه وضعیت کانفیگ می‌شوند.
+
+**V2Ray Config Checker** ساخته شده تا این مشکل را به سادگی حل کند:
+1. کانفیگ‌های داغ و تازه را از سورس‌های بهینه‌شده مخصوص اینترنت ایران (شامل **Reality و VLESS**) دریافت می‌کند.
+2. با هندشیک واقعی در هسته **Xray-core**، دسترسی واقعی به اینترنت، **یوتیوب** و هوش مصنوعی **جمنای** را می‌سنجد.
+3. با یک کلیک، بدون نیاز به نصب نرم‌افزارهای پیچیده دیگر، کل سیستم را به بهترین کانفیگ آنلاین متصل می‌کند.
+
+### ✨ قابلیت‌های کلیدی
+
+* **دکمه جادویی «دریافت و تست سریع»:** یک کلیک کافیست تا تازه‌ترین سرورها دریافت، تست و تمام موارد قطع به طور خودکار پاکسازی شوند.
+* **سازگاری کامل با پروتکل‌های ضد فیلتر:** پشتیبانی تخصصی از VLESS Reality، gRPC، WebSocket، Trojan و Shadowsocks 2022.
+* **تست هوشمند Gemini و YouTube:** تشخیص دقیق وضعیت سرور (سرویس باز / تحریم کشوری ۴۵۱ / مسدود ۴۰۳).
+* **دکمه «چسباندن کانفیگ»:** امکان کپی کردن دسته کانفیگ‌ها از کانال‌ها و گروه‌های تلگرام و تست فوری با یک کلیک.
+* **پروکسی سیستمی خودکار:** بدون نیاز به تنظیمات دستی مرورگر؛ با اتصال، پروکسی ویندوز فعال و با خروج به حالت قبل بازمی‌گردد.
+* **بلک‌لیست خودکار با انقضای ۱۲ ساعته:** جلوگیری از اتلاف وقت روی سرورهای سوخته در دورهای بعدی.
+* **طراحی مدرن با تم اختصاصی Obsidian Copper:** رابط کاربری خلوت، آیکون‌های وکتور SVG خالص، دکمه‌های کنترل پنجره در سمت راست و فونت بهینه.
+* **اطلاع‌رسانی خودکار نسخه جدید:** بررسی مداوم ریپازیتوری گیت‌هاب و نمایش بنر دانلود در صورت انتشار نسخه جدید.
+
+---
+
+## 💻 اجرای محلی و توسعه (Local Development)
+
+پیش‌نیاز: [Node.js](https://nodejs.org/) (نسخه ۱۸ یا بالاتر)
 
 ```bash
+# ۱. کلون ریپازیتوری
 git clone https://github.com/almas77abolfazl/v2ray-config-checker.git
 cd v2ray-config-checker
+
+# ۲. نصب وابستگی‌ها
 npm install
+
+# ۳. اجرای تست‌های هسته (Unit & Logic tests)
+npm test
+
+# ۴. اجرای برنامه
 npm start
 ```
 
-بار اول از تب **تنظیمات** دکمه «دانلود Xray-core» را بزنید (از GitHub یا آینه‌های آن دانلود و در `bin/` قرار می‌گیرد). اگر دانلود خودکار مسدود بود، فایل `xray.exe` را از مخزن [XTLS/Xray-core](https://github.com/XTLS/Xray-core/releases) بگیرید و با دکمه «انتخاب» مسیرش را بدهید.
-
-### بیلد و نصب
+### 📦 بیلد نسخه‌های ویندوز (Packaging)
 
 ```bash
+# ساخت پکیج‌های نصبی (NSIS) و پرتابل در پوشه releases/
 npm run build
 ```
 
-فایل‌های نصبی در پوشه [`releases/`](releases/) ساخته می‌شوند (NSIS installer + portable). جزئیات در [`releases/README.md`](releases/README.md).
-
-### تست منطق
-
-```bash
-npm test
-```
-
-تست‌ها پارسر لینک‌ها (همه شبکه‌ها: tcp/ws/httpupgrade/grpc/reality/h2/quic/kcp، دیکد سابسکریپشن base64، تشخیص تکراری)، طبقه‌بندی Gemini/YouTube و منطق لیست سیاه را بررسی می‌کنند و بدون نیاز به شبکه/گرافیک اجرا می‌شوند.
-
-### عیب‌یابی
-
-| نشانه | راه‌حل |
-|---|---|
-| همه کانفیگ‌ها آفلاین | احتمال فیلترینگ/فیلترشکن خود دستگاه؛ ابتدا یک کانفیگ را روی مرورگر/کلاینت دیگر تست کنید |
-| دانلود Xray ناموفق | فایل را دستی از GitHub بگیرید و مسیرش را در تنظیمات ثبت کنید |
-| پورت‌های ۱۰۸۰۸/۱۰۸۰۹ اشغالند | برنامه خودکار به پورت‌های بعدی جابه‌جا می‌شود؛ یا v2rayN/klient مشابه را ببندید |
-
-### ساختار پروژه
-
-```
-main.js                     پنجره اصلی و لایه IPC
-preload.js                  پل امن بین UI و main
-src/core/protocols.js       پارس لینک‌ها → کانفیگ outbound برای Xray
-src/core/xrayCore.js        دانلود/اجرای Xray-core (با آینه‌های جانبی)
-src/core/checker.js         تست اتصال/Gemini/YouTube از طریق curl
-src/core/testEngine.js      صف تست موازی با بودجه زمانی و پیش‌چک TCP
-src/core/blacklist.js       لیست سیاه کانفیگ‌های مرده
-src/core/session.js         اتصال پایدار + تنظیم/بازگردانی پروکسی سیستم
-src/core/store.js           ذخیره تنظیمات/منابع/کش در data/
-src/renderer/               رابط کاربری (HTML/CSS/JS خالص، فارسی RTL)
-assets/                     آیکون برنامه (با `npm run make:icon`)
-scripts/                    تست منطق، بیلد آیکون و ابزارهای عیب‌یابی
-```
-
-### نکته حقوقی
-
-این پروژه اپن‌سورس و برای آموزش/ابزار شخصی است. استفاده از کانفیگ‌های عمومی و دور زدن محدودیت‌های دسترسی در نهایت بر عهده کاربر است؛ سازندگان هیچ مسئولیتی نسبت از دست دادن دسترسی، تغییر تنظیمات سیستم یا محتوای ارسالی از طریق کانفیگ‌های بیرونی نمی‌پذیرند. کانفیگ‌ها در اختیار اشخاص ثالث هستند و ممکن است ناپایدار یا ناامن باشند.
-
-### مشارکت
-
-Pull request خوش‌وقتید. قبل از ارسال، `npm test` را اجرا کنید. برای قابلیت جدید یک issue باز کنید تا طراحی‌اش توافق شود.
-
-لایسنس: [MIT](LICENSE)
-
 ---
 
-## English
-
-**V2Ray Config Checker** is a Windows desktop app that harvests public V2Ray/VLESS/VMess/Trojan/Shadowsocks subscription links, *actually tests* each config on your machine by running Xray-core with a local SOCKS/HTTP inbound, and reports whether Gemini and YouTube open through it — or whether the exit is geo-restricted. Any working config can be promoted to a full system proxy with one click.
-
-Highlights: parallel testing (up to 16) with a per-config time budget, dead-server pre-check, automatic dead-config blacklist across re-collections, graceful Windows system-proxy management with crash recovery, and a Persian RTL UI that stays smooth with thousands of rows.
-
-### Quick start
-
-```bash
-git clone https://github.com/almas77abolfazl/v2ray-config-checker.git
-cd v2ray-config-checker
-npm install
-npm start        # then download Xray-core from the Settings tab
-npm test         # logic tests (parser, gemini/youtube classification, blacklist)
-npm run build    # NSIS + portable installers into releases/
-```
-
-### License
-
-[MIT](LICENSE) — provided “as is”, without warranty. You are responsible for how you use the configs you connect to.
+## 📜 لایسنس
+این پروژه تحت پروانه [MIT License](LICENSE) منتشر شده است. استفاده، ویرایش و توسعه آزاد است.
