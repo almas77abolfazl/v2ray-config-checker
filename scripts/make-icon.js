@@ -118,8 +118,8 @@ function inPolygon(px, py, poly) {
 function render(size) {
   const rgba = Buffer.alloc(size * size * 4);
   const radius = size * 0.22;
-  const bg = [[45, 212, 191], [16, 122, 110]];
-  const fg = [4, 33, 29];
+  const bg = [[240, 149, 82], [210, 105, 30]];
+  const fg = [18, 19, 22];
   const ss = 3;
   for (let y = 0; y < size; y += 1) {
     for (let x = 0; x < size; x += 1) {
