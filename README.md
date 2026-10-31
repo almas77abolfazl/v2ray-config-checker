@@ -1,137 +1,176 @@
 <div align="center">
 
-<img src="assets/icon.png" width="96" height="96" alt="V2Ray Config Checker Logo" />
+  <img src="assets/icon.png" width="96" height="96" alt="V2Ray Config Checker Logo" style="border-radius: 20px; box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);" />
 
-# V2Ray Config Checker
+  # V2Ray Config Checker
 
-**High-Performance V2Ray/Xray Node Collector, Real-Time Latency Tester & System Proxy**
+  **High-Performance Node Collector, Real-Time Handshake Latency Tester & System Proxy.**  
+  *Engineered for strict censorship environments with zero runtime bloat.*
 
-[![GitHub release](https://img.shields.io/github/v/release/almas77abolfazl/v2ray-config-checker?color=e28743&style=flat-square)](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest)
-[![License: MIT](https://img.shields.io/badge/License-MIT-3db88f.svg?style=flat-square)](LICENSE)
-[![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-blue.svg?style=flat-square)](https://github.com/almas77abolfazl/v2ray-config-checker/releases)
-[![Built with Electron](https://img.shields.io/badge/Built%20with-Electron%20Vanilla-475569.svg?style=flat-square)](https://www.electronjs.org/)
+  <br />
+
+  <p align="center">
+    <a href="https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest">
+      <img src="https://img.shields.io/badge/Download_Installer-Windows_x64_(.exe)-10b981?style=for-the-badge&logo=windows&logoColor=white" height="36" alt="Download Installer" />
+    </a>
+    &nbsp;&nbsp;
+    <a href="https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest">
+      <img src="https://img.shields.io/badge/Portable_Edition-Standalone_Binary-0284c7?style=for-the-badge" height="36" alt="Download Portable" />
+    </a>
+  </p>
+
+  <br />
+
+  [![Release](https://img.shields.io/github/v/release/almas77abolfazl/v2ray-config-checker?color=10b981&style=for-the-badge&logo=github&logoColor=white)](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest)
+  [![Platform](https://img.shields.io/badge/Platform-Windows_10_%7C_11-0284c7?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest)
+  [![License](https://img.shields.io/badge/License-MIT-334155?style=for-the-badge)](LICENSE)
+
+  <br />
+
+  [![Workflow](https://img.shields.io/github/actions/workflow/status/almas77abolfazl/v2ray-config-checker/release.yml?branch=main&label=Build%20Pipeline&logo=githubactions&logoColor=white)](https://github.com/almas77abolfazl/v2ray-config-checker/actions)
+  [![Electron](https://img.shields.io/badge/Electron-Vanilla-47848F?logo=electron&logoColor=white)](https://www.electronjs.org/)
+  [![Core](https://img.shields.io/badge/Engine-Xray--core-purple)](https://github.com/XTLS/Xray-core)
+  [![Tests](https://img.shields.io/badge/Self--Tests-Passing-10b981)](scripts/selftest.js)
+
+</div>
 
 <br />
-
-<p align="center">
-  <a href="#-quick-download">Download</a> •
-  <a href="#-english">English</a> •
-  <a href="#-فارسی">فارسی</a> •
-  <a href="#-key-features">Features</a> •
-  <a href="#-architecture">Architecture</a>
-</p>
 
 ---
 
-<br />
+## Application Interface
 
-<img src="assets/screenshot.png" width="900" alt="V2Ray Config Checker Interface" style="border-radius: 8px; box-shadow: 0 8px 30px rgba(0,0,0,0.5);" />
-
-<br />
-
+<div align="center">
+  <img src="assets/screenshot.png" alt="V2Ray Config Checker UI" width="100%" style="border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);" />
+  <p align="center"><em>Streamlined dark workspace with live protocol badges, latency indicators, and quick connection management.</em></p>
 </div>
 
 ---
 
-## ⚡ Quick Download
+## Downloads & Distribution
 
-Download the latest pre-built Windows binaries directly from [Releases](https://github.com/almas77abolfazl/v2ray-config-checker/releases/latest):
+Official Windows releases are compiled automatically via GitHub Actions:
 
-| Package | Type | Description |
-|---|---|---|
-| **`V2Ray-Config-Checker-*-win-x64.exe`** | **Installer (NSIS)** | Full setup with customizable install path & desktop shortcut |
-| **`V2Ray-Config-Checker-*-portable.exe`** | **Portable** | Standalone zero-install executable, runs directly from USB/disk |
+| Asset | Architecture | Description |
+| :--- | :--- | :--- |
+| **Installer Setup (`.exe`)** | Windows x64 | Standard NSIS installation with desktop integration |
+| **Portable Binary (`.exe`)** | Windows x64 | Zero-install standalone executable, safe for removable drives |
+| **Release Artifacts & Checksums** | Source / Multi | Direct access to builds, release notes, and commit history |
 
-*Note: On first launch, if Xray-core is not present on your system, the app will automatically download the official binary, or you can select your own `xray.exe` in Settings.*
+> **First Run Note:** If `xray.exe` is not detected in your local environment, the core supervisor can automatically fetch the official build via GitHub fallback mirrors, or you can specify a custom binary path in Settings.
 
 ---
 
-## 🌐 English
+## Core Capabilities
 
-### Overview
-**V2Ray Config Checker** is a fast, lightweight, and modern desktop application tailored specifically for censorship-heavy environments (such as Iran DPI). It automatically aggregates nodes from curated channels and repositories, tests them via an isolated local **Xray-core** process with realistic TLS handshakes, and provides a 1-click system proxy toggle.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>DPI-Resilient Real Handshakes</h3>
+      <p>Bypasses simplistic TCP pings that trigger false negatives under national firewalls. Routes actual outbound handshakes through an isolated local <code>xray-core</code> child process to verify live routing.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>Dual Service Verification</h3>
+      <p>Checks true reachability beyond ping: audits access to <strong>Google Gemini</strong> (detecting HTTP 451 country bans and region restrictions) and <strong>YouTube</strong> streaming endpoints.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>Optimized Protocol Support</h3>
+      <p>Engineered for censorship circumvention with full support for <strong>VLESS XTLS-Reality</strong>, WebSocket, gRPC, HTTPUpgrade, Trojan, VMess, and Shadowsocks (including SS-2022).</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>Native System Proxy & Recovery</h3>
+      <p>Enables Windows system proxy with single-click operation. Backed by crash recovery (<code>session-active.json</code>) to safely restore previous registry proxy settings if terminated unexpectedly.</p>
+    </td>
+  </tr>
+</table>
 
-### 🚀 Key Features
+---
 
-* **Instant Smart Test ("⚡ دریافت و تست سریع"):** Fetches the freshest nodes, tests up to 12 configs in parallel, and automatically discards offline or expired entries in under 20 seconds.
-* **Specialized for Modern Anti-Censorship Protocols:** Native support for **VLESS XTLS-Reality**, WebSocket, gRPC, HTTPUpgrade, Trojan, VMess, and Shadowsocks (including SS-2022).
-* **Dual-Service Availability Checker:** Independently verifies direct access to **Google Gemini** (detecting Geo-blocking/HTTP 451) and **YouTube** streaming reachability.
-* **True DPI-Resistant Testing:** Bypasses naive TCP raw pings that trigger DPI drops; runs genuine outbound handshakes through local Xray sockets.
-* **1-Click System Proxy:** Sets and reverts Windows system proxy (`ProxyEnable` & `ProxyServer` in Registry) with graceful cleanup and auto-recovery on crash.
-* **Auto-Expiring Blacklist:** Dead servers are cached with a 12-hour TTL to prevent re-testing the same broken nodes while allowing revived servers to reappear.
-* **Zero Runtime Bloat:** Pure vanilla JavaScript frontend with virtualized rendering; smooth 60fps scrolling even with hundreds of items.
-* **Auto Update Notifier:** Checks GitHub releases on launch and notifies users whenever a newer build is published.
+## Functional Highlights
 
-### 🛠️ Architecture & Tech Stack
+### 1. Fast Batch Engine & Auto-Pruning
+- Parallel concurrency (up to 16 workers) testing nodes with strict individual deadlines.
+- Automatically discards offline servers and filters out unsupported transport schemes without blocking the UI thread.
+- Retains working servers sorted by response time and service availability.
+
+### 2. Auto-Expiring Blacklist (12h TTL)
+- Dead servers are hashed and cached to prevent redundant bandwidth and CPU overhead in future scrape cycles.
+- Temporary outages automatically expire after 12 hours, allowing revived endpoints to be re-evaluated.
+
+### 3. Clipboard & Custom Imports
+- Click **"چسباندن کانفیگ"** to immediately parse links copied from Telegram channels or groups.
+- Supports Base64 subscriptions, raw protocol URIs, and split batch configurations.
+
+---
+
+## Architecture & Codebase Design
+
+The application follows strict process isolation with no heavy frontend runtime dependencies:
 
 ```text
-├── main.js                  # Frameless Electron window, native IPC & registry proxy management
-├── preload.js               # Secure contextBridge API mapping
+├── main.js                  # Main Process: Window lifecycle, IPC registration, Windows registry proxy
+├── preload.js               # Security Bridge: Context-isolated IPC bindings
+│
 ├── src/
-│   ├── core/
-│   │   ├── xrayCore.js      # Xray binary manager, mirror downloader & multi-port process supervisor
-│   │   ├── protocols.js     # Decoders & parsers for vless/vmess/trojan/ss/sub URI schemes
-│   │   ├── checker.js       # Real-world traffic probing with curl.exe socks5-hostname
-│   │   ├── testEngine.js    # Concurrency queue with strict timeouts & auto-port allocation
-│   │   ├── collector.js     # Multi-source scraper (GitHub subscriptions & Telegram mirrors)
-│   │   ├── session.js       # Persistent Windows proxy session & crash recovery
-│   │   ├── blacklist.js     # Hash-based duplicate detection & TTL expiry
-│   │   └── updater.js       # Lightweight GitHub release version comparator
-│   └── renderer/            # High-performance Vanilla RTL interface with Obsidian Copper theme
+│   ├── core/                # Core Business & Protocol Layer
+│   │   ├── xrayCore.js      # Supervisor for Xray executable, mirror downloads & port binding
+│   │   ├── protocols.js     # Protocol parsing (VLESS/VMess/Trojan/Shadowsocks) & Base64 decoder
+│   │   ├── testEngine.js    # Concurrency test queue & timeout controllers
+│   │   ├── checker.js       # Outbound reachability via curl --socks5-hostname
+│   │   ├── collector.js     # Subscription fetching (GitHub raw & Telegram web mirrors)
+│   │   ├── session.js       # Windows registry proxy configuration & state recovery
+│   │   ├── blacklist.js     # SHA-indexed blacklist with TTL pruning
+│   │   ├── updater.js       # GitHub API release version comparison
+│   │   └── store.js         # Atomic JSON persistence (settings, sources, cache)
+│   │
+│   └── renderer/            # Presentation Layer
+│       ├── index.html       # Clean semantic DOM
+│       ├── renderer.js      # Virtual table, DOM patching & state orchestration
+│       └── styles.css       # Obsidian & Emerald palette, LTR titlebar, responsive layout
 ```
 
 ---
 
-## 🇮🇷 فارسی
+## فارسی (راهنما و مشخصات)
 
-### درباره پروژه
-در شرایط فعلی اینترنت و فیلترینگ شدید DPI در ایران، اکثر کانفیگ‌های عمومی ظرف چند ساعت مسدود می‌شوند یا به دلیل پروتکل‌های قدیمی (مانند VMess بدون TLS) کارایی ندارند. علاوه بر این، بسیاری از تسترهای سنتی به دلیل پینگ مستقیم TCP باعث مسدودسازی زودهنگام یا تشخیص اشتباه وضعیت کانفیگ می‌شوند.
+### معماری و هدف توسعه
+سیستم‌های فیلترینگ پیشرفته (DPI) بسیاری از پروتکل‌های قدیمی را شناسایی و مسدود می‌کنند؛ از سوی دیگر، تسترهای سنتی به دلیل ارسال پکت‌های TCP خام به جای هندشیک رمزگذاری‌شده TLS، سرورهای سالم را قطع گزارش می‌کنند.
 
-**V2Ray Config Checker** ساخته شده تا این مشکل را به سادگی حل کند:
-1. کانفیگ‌های داغ و تازه را از سورس‌های بهینه‌شده مخصوص اینترنت ایران (شامل **Reality و VLESS**) دریافت می‌کند.
-2. با هندشیک واقعی در هسته **Xray-core**، دسترسی واقعی به اینترنت، **یوتیوب** و هوش مصنوعی **جمنای** را می‌سنجد.
-3. با یک کلیک، بدون نیاز به نصب نرم‌افزارهای پیچیده دیگر، کل سیستم را به بهترین کانفیگ آنلاین متصل می‌کند.
+این نرم‌افزار برای ارائه یک تجربه پایدار و سریع توسعه داده شده است:
+- **تست واقعی با هسته Xray:** هر کانفیگ به صورت مجزا در هسته اختصاصی Xray اجرا و با درخواست واقعی وب ارزیابی می‌شود.
+- **تمرکز بر VLESS Reality:** اولویت با پروتکل‌های مدرن مقاوم در برابر فیلترینگ است.
+- **مدیریت خودکار پروکسی ویندوز:** بدون نیاز به تنظیمات دستی مرورگرها، کل سیستم به سرور انتخابی متصل می‌شود.
 
-### ✨ قابلیت‌های کلیدی
-
-* **دکمه جادویی «دریافت و تست سریع»:** یک کلیک کافیست تا تازه‌ترین سرورها دریافت، تست و تمام موارد قطع به طور خودکار پاکسازی شوند.
-* **سازگاری کامل با پروتکل‌های ضد فیلتر:** پشتیبانی تخصصی از VLESS Reality، gRPC، WebSocket، Trojan و Shadowsocks 2022.
-* **تست هوشمند Gemini و YouTube:** تشخیص دقیق وضعیت سرور (سرویس باز / تحریم کشوری ۴۵۱ / مسدود ۴۰۳).
-* **دکمه «چسباندن کانفیگ»:** امکان کپی کردن دسته کانفیگ‌ها از کانال‌ها و گروه‌های تلگرام و تست فوری با یک کلیک.
-* **پروکسی سیستمی خودکار:** بدون نیاز به تنظیمات دستی مرورگر؛ با اتصال، پروکسی ویندوز فعال و با خروج به حالت قبل بازمی‌گردد.
-* **بلک‌لیست خودکار با انقضای ۱۲ ساعته:** جلوگیری از اتلاف وقت روی سرورهای سوخته در دورهای بعدی.
-* **طراحی مدرن با تم اختصاصی Obsidian Copper:** رابط کاربری خلوت، آیکون‌های وکتور SVG خالص، دکمه‌های کنترل پنجره در سمت راست و فونت بهینه.
-* **اطلاع‌رسانی خودکار نسخه جدید:** بررسی مداوم ریپازیتوری گیت‌هاب و نمایش بنر دانلود در صورت انتشار نسخه جدید.
-
----
-
-## 💻 اجرای محلی و توسعه (Local Development)
-
-پیش‌نیاز: [Node.js](https://nodejs.org/) (نسخه ۱۸ یا بالاتر)
+### دستورات توسعه محلی
 
 ```bash
-# ۱. کلون ریپازیتوری
+# کلون ریپازیتوری
 git clone https://github.com/almas77abolfazl/v2ray-config-checker.git
 cd v2ray-config-checker
 
-# ۲. نصب وابستگی‌ها
+# نصب وابستگی‌ها
 npm install
 
-# ۳. اجرای تست‌های هسته (Unit & Logic tests)
+# اجرای تست‌های واحد هسته (اعتبارسنجی پارسرها و منطق تست)
 npm test
 
-# ۴. اجرای برنامه
+# اجرای نرم‌افزار در محیط توسعه
 npm start
 ```
 
-### 📦 بیلد نسخه‌های ویندوز (Packaging)
+### ساخت پکیج نهایی (Windows Build)
 
 ```bash
-# ساخت پکیج‌های نصبی (NSIS) و پرتابل در پوشه releases/
+# تولید فایل‌های نصبی (NSIS) و پرتابل در پوشه releases/
 npm run build
 ```
 
 ---
 
-## 📜 لایسنس
-این پروژه تحت پروانه [MIT License](LICENSE) منتشر شده است. استفاده، ویرایش و توسعه آزاد است.
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+Developed and maintained by **[Abolfazl Nasiri Almas](https://github.com/almas77abolfazl)**.
